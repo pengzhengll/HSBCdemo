@@ -1,0 +1,5 @@
+# dev: 开发环境配置    pro: 生产环境配置
+# 项目暂时采用 .Properties 文件的配置方式
+#spring:
+#  profiles:
+#      active: dev

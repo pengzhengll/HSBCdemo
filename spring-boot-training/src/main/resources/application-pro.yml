@@ -1,0 +1,61 @@
+# 标记是从哪个工程启动
+start:
+  project: demo
+
+server:
+  port: 8080
+  session:
+      timeout: 30m         # Session timeout in seconds.
+
+spring:
+  datasource: # 数据源配置
+    druid: 
+      base:  # 基础数据源配置
+        url: jdbc:oracle:thin:@192.168.0.187:1521/nja
+        username: WLS
+        password: WLS
+        initial-size: 5
+        max-active: 20
+        max-wait: 10000
+      biz:   # 业务数据源配置
+        url: jdbc:oracle:thin:@192.168.0.187:1521/nja
+        username: WLS
+        password: WLS
+        initial-size: 5
+        max-active: 20
+        max-wait: 10000
+
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on-save           # Sessions flush mode.
+      namespace: spring:session     # Namespace for keys used to store sessions.
+
+  redis:                  # Redis数据缓存
+    database: 0           # Redis数据库索引（默认为0）
+    host: localhost       # Redis服务器地址
+    port: 6379            # Redis服务器连接端口
+    password:             # Redis服务器连接密码（默认为空）
+    timeout: 50000        # 连接超时时间（毫秒）
+    pool:
+      max-active: 2000    # 连接池最大连接数（使用负值表示没有限制）
+      max-wait: -1        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-idle: 500       # 连接池中的最大空闲连接
+      min-idle: 50        # 连接池中的最小空闲连接
+
+# 以下序列号生成规则配置，<固定配置，不允许修改>
+nja:
+ redis:
+  enabled: true                 # sequence配置生效
+  sequences:                    # 序列类型数组
+    -
+     name: audit_log_id         # 审计日志专用ID，有序递增
+     number: 0                  # ID位数, 0表示不限制位数
+     increment: 1               # 步长增量 【默认1】
+     format: '{number}'         # 序列格式，可使用{0~n}占位符，{cycle}与{number}特殊占位
+    - 
+     name: primary_key_id       # 默认通用数据主键ID
+     number: 0                  # ID位数, 0表示不限制位数
+     increment: 1               # 步长增量 【默认1】
+     format: '{number}'         # 序列格式，可使用{0~n}占位符，{cycle}与{number}特殊占位
+     
