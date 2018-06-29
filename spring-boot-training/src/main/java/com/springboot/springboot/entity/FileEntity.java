@@ -1,6 +1,8 @@
-package com.springboot.springboot.entry;
+package com.springboot.springboot.entity;
 
 import java.io.Serializable;
+
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 文件实体
@@ -9,22 +11,26 @@ import java.io.Serializable;
  * @author Administrator
  *
  */
-public class FileStore implements Serializable {
+public class FileEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String id;
-	private String fileName;
-	private byte[] content;
-	private String operateTime;
+	private String filename;
+	private String content;
+	private String operatetime;
 	private String status;
 
-	public FileStore(String id, String fileName, byte[] content, String operateTime, String status) {
+	public FileEntity(String id, String fileName, String content, String operateTime, String status) {
 		super();
 		this.id = id;
-		this.fileName = fileName;
+		this.filename = fileName;
 		this.content = content;
-		this.operateTime = operateTime;
+		this.operatetime = operateTime;
 		this.status = status;
+	}
+
+	public FileEntity() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getId() {
@@ -36,27 +42,27 @@ public class FileStore implements Serializable {
 	}
 
 	public String getFileName() {
-		return fileName;
+		return filename;
 	}
 
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.filename = fileName;
 	}
 
-	public byte[] getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
 	public String getOperateTime() {
-		return operateTime;
+		return operatetime;
 	}
 
 	public void setOperateTime(String operateTime) {
-		this.operateTime = operateTime;
+		this.operatetime = operateTime;
 	}
 
 	public String getStatus() {

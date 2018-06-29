@@ -1,5 +1,7 @@
 package com.springboot.springboot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.springboot.springboot.entity.FileEntity;
 import com.springboot.springboot.service.FileStoreService;
 
 @RestController
@@ -15,50 +19,33 @@ public class FileStoreController {
 
 	@Autowired
 	private FileStoreService fileStoreService;
+	
+	public List<String> listFileName;
 
 	/** 查询文件信息 **/
-	@RequestMapping(value = "/queryAllFileInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/queryAllFileInfo", method = RequestMethod.GET)
 	@ResponseBody
-	public String queryAllFileInfo() {
-		// System.out.print(data);
-		// JSON jj = JSON.parseObject(data);
-		// OriginalWatchList content = JSON.parseObject(data, OriginalWatchList.class);
-		// content.watchlistId =(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new
-		// Date());
-		// originalWatchListService.addNewRecord(content);
-		return "success";
-	}
+	public List<FileEntity> queryAllFileInfo() {
+		List<FileEntity> allFiles = fileStoreService.queryFile();
+		return allFiles;
 
-	/** 添加文件信息 **/
-	@RequestMapping(value = "/addFileInfo", method = RequestMethod.POST)
-	@ResponseBody
-	public String addFileInfo(@RequestBody String fileInfo) {
-		// System.out.print(data);
-		// JSON jj = JSON.parseObject(data);
-		// OriginalWatchList content = JSON.parseObject(data, OriginalWatchList.class);
-		// content.watchlistId =(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new
-		// Date());
-		// originalWatchListService.addNewRecord(content);
-		return "success";
 	}
 
 	/** 删除文件信息 **/
-	@RequestMapping(value = "/deleteFileInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteFileInfo", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String queryAllFileInfo(@RequestBody String fileNO) {
-		// System.out.print(data);
-		// JSON jj = JSON.parseObject(data);
-		// OriginalWatchList content = JSON.parseObject(data, OriginalWatchList.class);
-		// content.watchlistId =(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new
-		// Date());
-		// originalWatchListService.addNewRecord(content);
-		return "success";
+	public boolean queryAllFileInfo(@RequestBody String fileNO) {
+		Object parse = JSON.parseObject(fileNO).get("id");
+		System.out.println(String.valueOf(parse));
+		boolean deleteFile = fileStoreService.deleteFile(String.valueOf(parse));
+		return deleteFile;
 	}
 
 	/** test **/
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	@ResponseBody
 	public String test() {
 		return "success";
 	}
+
 }
